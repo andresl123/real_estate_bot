@@ -1,5 +1,8 @@
 import sqlite3
 import time
+# set the US curency in the select method
+import locale
+locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
 
 class Insert:
     def __init__(self,listings_price,listings_location,listings_description,listings_url,listings_image,location,budget,city):
@@ -15,7 +18,7 @@ class Insert:
         con = sqlite3.connect(".\web\database\database.db")
         # zip function will make all the list the same size
         # getting the values of price, url, image, location, description and images 
-        cityCap = self.city.capitalize()
+        cityCap = self.city.split()[0].capitalize()
         for i, l, j, k, z in zip(self.listings_price,self.listings_location,self.listings_description,self.listings_url,self.listings_image):
             print(f"--------------------->{l.text}<------------------------")
             print(f"#####################>{cityCap}<#######################")
@@ -43,14 +46,8 @@ class Select:
             print("DATE = ",row[5])
             print("")
 
-            PRICE = row[0] 
-            LOCATION = row[1]
-            DESCRIPTION = row[2]
-            URL = row[3]
-            IMAGES = row[4]
-            DATE = row[5]
-
-            yield f"Price: {row[0]}\nLocation: {row[1]}\nDescription: {row[2]}\nURL: {row[3]}\nIMAGES: {row[4]}\nDATE: {row[5]}\n"
+            # using "yield" allow me to keeping return values to the caller without finishes the function insteed of using "return" and return only the first value and terminate the function.
+            yield f"Price: {locale.currency(float(row[0]), grouping=True)}\nLocation: {row[1]}\nDescription: {row[2]}\nURL: {row[3]}\nIMAGES: {row[4]}\nDATE: {row[5]}\n"
 
             
         con.close
