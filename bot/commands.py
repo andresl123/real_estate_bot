@@ -25,7 +25,7 @@ def handle_start(message):
 # Decorator will handle the user input command, in this case "stop". This command will stop the while loop (in line 118). 
 @bot.message_handler(commands=['stop'])
 # The above decorator will call the bellow function
-def handle_search(message):
+def handle_stop(message):
     chat_id = message.chat.id
     user_info = user_data.get(chat_id)
     bot.send_message(chat_id, "The search was stoped")
@@ -123,11 +123,10 @@ def handle_user_input(message):
                     else:
                         main = Main(user_data[chat_id]['menu'],user_data[chat_id]['location'],user_data[chat_id]['budget'],user_data[chat_id]['city'])
                         main.findList()
-
                         select = Select
                         for item in select.select():
                             bot.send_message(chat_id, item)
-                        time.sleep(10)
+                        time.sleep(1800)
                 # when the while finishes will ask again to the user choose between 1 and 3 and change key step to menu, that will receive the user input to do another search
                 bot.send_message(chat_id, "Select one of the option for a NEW SEARCH:\nCategory menu:\n1. House\n2. Condo\n3. Land\nChoose between 1 and 3")
                 user_info['step'] = 'menu'

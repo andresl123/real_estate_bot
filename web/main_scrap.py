@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 from .db import Insert
 from .db import Select
+import time
 class Main:
     # dictionary to map the province and the kijiji code
     provinceDict = {"canada":"l0","ontario":"l9004","british-columbia":"l9007","alberta":"l9003","quebec":"l9001","saskatchewan":"l9009","nova-scotia":"l9002","new-brunswick":"l9005","manitoba":"l9006","prince-edward-island":"l9011","newfoundland":"l9008",}
