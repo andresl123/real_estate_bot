@@ -78,12 +78,6 @@ class Select():
         # adding the list of properties in a list
         count_old = 0    
         for item1 in get_from_table_old:      
-            # print(f'PRICE = {item[0]}')
-            # print(f'LOCATION = {item[1]}')
-            # print(f'DESCRIPTION = {item[2]}')
-            # print(f'URL = {item[3]}')
-            # print(f'IMAGES = {item[4]}')
-            # print(f'DATE = {item[5]}')
             PRICE = item1[0]
             LOCATION = item1[1]
             DESCRIPTION = item1[2]

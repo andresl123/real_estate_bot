@@ -123,6 +123,7 @@ def handle_user_input(message):
                     else:
                         main = Main(user_data[chat_id]['menu'],user_data[chat_id]['location'],user_data[chat_id]['budget'],user_data[chat_id]['city'])
                         main.findList()
+                        bot.send_message(chat_id, "Loading...")
                         select = Select
                         for item in select.select():
                             bot.send_message(chat_id, item)
