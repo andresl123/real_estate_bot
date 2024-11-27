@@ -42,7 +42,7 @@ def handle_search(message):
     bot.send_message(chat_id, "Category menu:\n1. House\n2. Condo\n3. Land\nChoose between 1 and 3")
     
     # Initialize user state to capture menu first
-    user_data[chat_id] = {'step': 'menu'}
+    user_data[chat_id] = {'step': 'email'}
 
 # Handle user responses
 # the bot decorator is checking new messages that arrive in the telegram bot.
@@ -53,7 +53,12 @@ def handle_user_input(message):
     chat_id = message.chat.id
     user_info = user_data.get(chat_id)
 
-    if user_info['step'] == 'menu':
+    if user_info['step'] == 'email':
+        bot.send_message(chat_id, "Please provide your email.")
+        user_info['email'] = message.text
+        
+
+    elif user_info['step'] == 'menu':
         try:
             user_info['menu'] = int(message.text)
             # Check if the user input is within the valid range
@@ -140,6 +145,8 @@ def handle_user_input(message):
             # Prompt again if the input is not a valid Value
             bot.send_message(chat_id, "Invalid input!!! Enter your desired city:")
             user_info['step'] = 'city'
+
+
 
 
 
