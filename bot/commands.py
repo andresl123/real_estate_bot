@@ -56,6 +56,21 @@ def handle_user_input(message):
     if user_info['step'] == 'email':
         bot.send_message(chat_id, "Please provide your email.")
         user_info['email'] = message.text
+        try:
+            user_info['email'] = message.text
+            # Check if the user input is within the valid range
+            if (user_data[chat_id]['email'] != ''):
+                bot.send_message(chat_id, f"The email will be sent to {user_data[chat_id]['email']}")
+                user_info['step'] = 'menu'
+            
+            else:
+                bot.send_message(chat_id, "Email was not provided, you will receive just telegran notifications")
+                user_info['step'] = 'menu'
+
+        except ValueError:
+            # Prompt again if the input is not a valid Value
+            bot.send_message(chat_id, "Invalid input. Please enter a number between 1 and 3 for category:\n1. House\n2. Condo\n3. Land")
+            user_info['step'] = 'menu'
         
 
     elif user_info['step'] == 'menu':
