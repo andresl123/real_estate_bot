@@ -42,7 +42,7 @@ def handle_search(message):
     bot.send_message(chat_id, "Category menu:\n1. House\n2. Condo\n3. Land\nChoose between 1 and 3")
     
     # Initialize user state to capture menu first
-    user_data[chat_id] = {'step': 'email'}
+    user_data[chat_id] = {'step': 'menu'}
 
 # Handle user responses
 # the bot decorator is checking new messages that arrive in the telegram bot.
@@ -53,27 +53,7 @@ def handle_user_input(message):
     chat_id = message.chat.id
     user_info = user_data.get(chat_id)
 
-    if user_info['step'] == 'email':
-        bot.send_message(chat_id, "Please provide your email.")
-        user_info['email'] = message.text
-        try:
-            user_info['email'] = message.text
-            # Check if the user input is within the valid range
-            if (user_data[chat_id]['email'] != ''):
-                bot.send_message(chat_id, f"The email will be sent to {user_data[chat_id]['email']}")
-                user_info['step'] = 'menu'
-            
-            else:
-                bot.send_message(chat_id, "Email was not provided, you will receive just telegran notifications")
-                user_info['step'] = 'menu'
-
-        except ValueError:
-            # Prompt again if the input is not a valid Value
-            bot.send_message(chat_id, "Invalid input. Please enter a number between 1 and 3 for category:\n1. House\n2. Condo\n3. Land")
-            user_info['step'] = 'menu'
-        
-
-    elif user_info['step'] == 'menu':
+    if user_info['step'] == 'menu':
         try:
             user_info['menu'] = int(message.text)
             # Check if the user input is within the valid range
@@ -82,13 +62,22 @@ def handle_user_input(message):
                 user_info['step'] = 'menu'
             
             else:
-                bot.send_message(chat_id, "Enter province name:")
-                user_info['step'] = 'location'
+                bot.send_message(chat_id, "Please provide your email:")
+                user_info['step'] = 'email'
 
         except ValueError:
             # Prompt again if the input is not a valid Value
             bot.send_message(chat_id, "Invalid input. Please enter a number between 1 and 3 for category:\n1. House\n2. Condo\n3. Land")
             user_info['step'] = 'menu'
+
+    elif user_info['step'] == 'email':
+        email = message.text
+        if "@" in email and "." in email:
+            user_info['email'] = email
+            bot.send_message(chat_id, f"Email saved: {email}\nEnter the province name:")
+            user_info['step'] = 'location'
+        else:
+            bot.send_message(chat_id, "Invalid email. Please provide a valid email address.")
 
     elif user_info['step'] == 'location':
         try:
@@ -135,19 +124,24 @@ def handle_user_input(message):
             if user_data[chat_id]['city'].replace(" ","").isalpha():
                 print(user_data)
                 
+                # main = Main(user_data[chat_id]['menu'],user_data[chat_id]['location'],user_data[chat_id]['budget'],user_data[chat_id]['city'],user_data[chat_id]['email'])
+                # main.findList()
+
                 # This while loop will stop when the key step has the value stop
                 while (True):
                     if ( user_info['step'] == 'stop' ):
                         break
                     
-                    else:
+                    elif ( user_info['step'] == 'city' ):
+                        main = Main(user_data[chat_id]['menu'],user_data[chat_id]['location'],user_data[chat_id]['budget'],user_data[chat_id]['city'],user_data[chat_id]['email'])
+                        main.findList()
                         main = Main(user_data[chat_id]['menu'],user_data[chat_id]['location'],user_data[chat_id]['budget'],user_data[chat_id]['city'])
                         main.findList()
-                        bot.send_message(chat_id, "Loading...")
+
                         select = Select
                         for item in select.select():
                             bot.send_message(chat_id, item)
-                        time.sleep(1800)
+                        time.sleep(10)
                 # when the while finishes will ask again to the user choose between 1 and 3 and change key step to menu, that will receive the user input to do another search
                 bot.send_message(chat_id, "Select one of the option for a NEW SEARCH:\nCategory menu:\n1. House\n2. Condo\n3. Land\nChoose between 1 and 3")
                 user_info['step'] = 'menu'
@@ -160,9 +154,3 @@ def handle_user_input(message):
             # Prompt again if the input is not a valid Value
             bot.send_message(chat_id, "Invalid input!!! Enter your desired city:")
             user_info['step'] = 'city'
-
-
-
-
-
-

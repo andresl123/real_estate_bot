@@ -1,4 +1,5 @@
 import requests
+from bot.email1 import send_email
 from bs4 import BeautifulSoup
 from .db import Insert
 from .db import Select
@@ -8,7 +9,8 @@ class Main:
     provinceDict = {"canada":"l0","ontario":"l9004","british-columbia":"l9007","alberta":"l9003","quebec":"l9001","saskatchewan":"l9009","nova-scotia":"l9002","new-brunswick":"l9005","manitoba":"l9006","prince-edward-island":"l9011","newfoundland":"l9008",}
     categoryDict = {1:"c35",2:"c643",3:"c641"}
 
-    def __init__(self,menu,location,budget,city):
+    def __init__(self,menu,location,budget,city,email=""):
+        self.email = email
         self.menu = menu
         self.location = location
         self.budget = budget
@@ -41,4 +43,12 @@ class Main:
 
             insert = Insert(listings_price,listings_location,listings_description,listings_url,listings_image,self.location,self.budget,self.city)
             insert.insert()
+            if self.email:
+                print(self.email)
+                body = (
+                    f"Hello,\n\nWe found listings for your search:\nLocation: {self.location}\n"
+                    f"Budget: {self.budget}\nCity: {self.city}\n\n"
+                    f"Please visit the visit telegran Bot for more details.\n\nRegards,\nKijiji Bot"
+                )
+                send_email(self.email, body)
 
