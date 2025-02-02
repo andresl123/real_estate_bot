@@ -28,7 +28,10 @@ markdown-it-py==3.0.0
 MarkupSafe==3.0.1
 mdurl==0.1.2
 narwhals==1.9.3
-numpy==2.1.2
+numpy
+flask
+lxml
+beautifulsoup4==4.12.2
 packaging==24.1
 pandas==2.2.3
 pillow==10.4.0

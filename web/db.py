@@ -5,6 +5,23 @@ import locale
 locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
 # import module for regular expression
 import re
+import os
+
+# Path to the SQLite database
+db_path = "/app/database.db"
+
+# Ensure the directory exists
+os.makedirs(os.path.dirname(db_path), exist_ok=True)
+
+# Connect to SQLite database (creates file if it doesn't exist)
+con = sqlite3.connect(db_path)
+
+# Create a sample table (optional)
+cur = con.cursor()
+cur.execute("CREATE TABLE IF NOT EXISTS SCRAP (PRICE NUMBER(50, 2), LOCATION VARCHAR2(1000), DESCRIPTION VARCHAR2(1000), URL VARCHAR2(1000), IMAGES VARCHAR2(1000), DATE DATE)")
+con.commit()
+
+print("Database initialized successfully.")
 
 class Insert:
     def __init__(self,listings_price,listings_location,listings_description,listings_url,listings_image,location,budget,city):
@@ -17,14 +34,17 @@ class Insert:
         self.budget = budget
         self.city = city
     def insert(self):
-        con = sqlite3.connect(".\web\database\database.db")
+        con = sqlite3.connect(db_path)
         # zip function will make all the list the same size
         # getting the values of price, url, image, location, description and images 
         cityCap = self.city.split()[0].capitalize()
         time_epoch = int(time.time())
+        # print(f"#--------------------->{self.listings_location.text}<------------------------#")
+        # print(f"#####################>{cityCap}<#######################")
         for i, l, j, k, z in zip(self.listings_price,self.listings_location,self.listings_description,self.listings_url,self.listings_image):
-            # print(f"--------------------->{l.text}<------------------------")
-            # print(f"#####################>{cityCap}<#######################")
+            print("TESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTEST")
+            print(f"--------------------->{l.text}<------------------------")
+            print(f"#####################>{cityCap}<#######################")
             # If the value of i.text contains 'Please Contact' or l.text does not contain the value of the variable 'cityCap' will jump to the next iteration
             if (i.text == 'Please Contact' or cityCap not in l.text):
                 continue
@@ -34,7 +54,7 @@ class Insert:
 
 class Select():
     def select():
-        con = sqlite3.connect(".\web\database\database.db")
+        con = sqlite3.connect(db_path)
 
         # store all the results of the listining inside of the below list to be called after in the return statement
         results = []

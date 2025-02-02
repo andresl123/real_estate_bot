@@ -36,19 +36,21 @@ class Main:
             listings_price = soup.find_all("p", {"data-testid": "listing-price"})  # This might vary based on actual HTML
             listings_location = soup.find_all("p", {"data-testid": "listing-location"})
             listings_url = soup.find_all("a", {"data-testid":"listing-link"})
-            listings_description = soup.find_all("a", {"class":"sc-24a49435-0 eocwml"})
+            listings_description = soup.find_all("a", {"class":"sc-78b01f6c-0 hnlgXi"})
             listings_image = soup.find_all("img",{"data-testid":"listing-card-image"})
+
+            print(f'-------------->{listings_image}<------------------')
 
             # print(listings_description,listings_image,listings_location,listings_price,listings_url)
 
             insert = Insert(listings_price,listings_location,listings_description,listings_url,listings_image,self.location,self.budget,self.city)
             insert.insert()
-            if self.email:
-                print(self.email)
-                body = (
-                    f"Hello,\n\nWe found listings for your search:\nLocation: {self.location}\n"
-                    f"Budget: {self.budget}\nCity: {self.city}\n\n"
-                    f"Please visit the visit telegran Bot for more details.\n\nRegards,\nKijiji Bot"
-                )
-                send_email(self.email, body)
+            # if self.email:
+            #     print(self.email)
+            #     body = (
+            #         f"Hello,\n\nWe found listings for your search:\nLocation: {self.location}\n"
+            #         f"Budget: {self.budget}\nCity: {self.city}\n\n"
+            #         f"Please visit the visit telegran Bot for more details.\n\nRegards,\nKijiji Bot"
+            #     )
+            #     send_email(self.email, body)
 

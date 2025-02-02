@@ -150,7 +150,7 @@ def handle_user_input(message):
                 bot.send_message(chat_id, "Invalid input!! Enter your desired city:")
                 user_info['step'] = 'city'
 
-        except ValueError:
+        except ValueError as ve:
             # Prompt again if the input is not a valid Value
-            bot.send_message(chat_id, "Invalid input!!! Enter your desired city:")
+            bot.send_message(chat_id, "Invalid input!!! Enter your desired city:",ve)
             user_info['step'] = 'city'
