@@ -46,8 +46,8 @@ jobs:
     - name: Installing buildx to create image arm64
       run: docker buildx create --use
 
-    - name: Build the Docker image
-      run: docker buildx build . --file Dockerfile --platform linux/arm64 --tag real_state:latest
+    - name: Build the Docker image and push to repo
+      run: docker buildx build . --file Dockerfile --platform linux/arm64 --tag real_state:latest --push
     
-    - name: push to Docker hub
-      run: docker tag real_state:latest ${{ secrets.DOCKER_HUB_USERNAME }}/real_state:latest
+    # - name: push to Docker hub
+    #   run: docker tag real_state:latest ${{ secrets.DOCKER_HUB_USERNAME }}/real_state:latest
