@@ -43,4 +43,8 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag real_state:$(date +%s)
+      run: docker build . --file Dockerfile --platform linux/arm64 --tag real_state:latest
+    
+    - uses: actions/checkout@v4
+    - name: push to Docker hub
+      run: docker tag real_state:latest ${{ secrets.DOCKER_HUB_USERNAME }}/real_state:latest
