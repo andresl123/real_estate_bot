@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: real-estate-deployment
+  labels:
+    app: real-estate
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: real-estate
+  template:
+    metadata:
+      labels:
+        app: real-estate
+    spec:
+      containers:
+      - name: real-estate
+        image: {{ .Values.image }}
