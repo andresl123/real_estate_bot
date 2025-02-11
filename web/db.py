@@ -67,7 +67,7 @@ class Select():
         get_from_table_old = con.execute("""
             SELECT PRICE, LOCATION, DESCRIPTION, URL, IMAGES, DATE
             FROM SCRAP
-            WHERE DATE BETWEEN (SELECT MAX(DATE) - 19 FROM SCRAP) AND (SELECT MAX(DATE) - 10 FROM SCRAP)
+            WHERE DATE BETWEEN (SELECT MAX(DATE) - 3599 FROM SCRAP) AND (SELECT MAX(DATE) - 1800 FROM SCRAP)
             ORDER BY DATE DESC
             LIMIT 10
         """)

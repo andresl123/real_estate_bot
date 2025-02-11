@@ -141,7 +141,7 @@ def handle_user_input(message):
                         select = Select
                         for item in select.select():
                             bot.send_message(chat_id, item)
-                        time.sleep(10)
+                        time.sleep(1800)
                 # when the while finishes will ask again to the user choose between 1 and 3 and change key step to menu, that will receive the user input to do another search
                 bot.send_message(chat_id, "Select one of the option for a NEW SEARCH:\nCategory menu:\n1. House\n2. Condo\n3. Land\nChoose between 1 and 3")
                 user_info['step'] = 'menu'
